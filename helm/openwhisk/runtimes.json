@@ -69,9 +69,9 @@
                 "kind": "python:3",
                 "default": true,
                 "image": {
-                    "prefix": "openwhisk",
-                    "name": "python3action",
-                    "tag": "1.15.0"
+                    "prefix": "sciabarracom",
+                    "name": "actionloop-python-v3.7",
+                    "tag": "2020-10-21"
                 },
                 "deprecated": false,
                 "attached": {

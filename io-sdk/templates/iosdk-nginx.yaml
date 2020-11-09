@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: iosdk-nginx
+  labels:
+    app: iosdk-nginx
+spec:
+  containers:
+    - name: iosdk-nginx
+      image: nginx
+      ports:
+        - containerPort: 8080
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/opt"
+          name: iosdk-storage
+        - mountPath: "/etc/nginx/conf.d/virtualhost.conf"
+          subPath: virtualhost.conf
+          name: nginx-conf
+          readOnly: true
+        - mountPath: /var/log/nginx
+          name: log
+  initContainers:
+    - name: iosdk-job
+      image: sciabarracom/io-sdk
+      imagePullPolicy: Always
+      command: ["/job.sh"]
+      #command: ["/bin/bash", "-c", "\"cd /opt && rm -rvf io-sdk && git clone https://github.com/pagopa/io-sdk.git && /usr/bin/wsk property set --apihost $APIHOST --auth $AUTH && cd io-sdk/admin && make web && make deploy\""]
+      volumeMounts:
+        - mountPath: "/opt"
+          name: iosdk-storage
+      env:
+      - name: APIHOST
+        value: "http://10.111.90.7"
+      - name: AUTH
+        value: "23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP"
+  volumes:
+    - name: iosdk-storage
+      persistentVolumeClaim:
+        claimName: iosdk-pvc
+    - name: nginx-conf
+      configMap:
+        name: nginx-conf
+    - name: log
+      emptyDir: {}
