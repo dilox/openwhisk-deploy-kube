@@ -1,29 +1,13 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: simpleingressroute
-  namespace: default
-spec:
-  entryPoints:
-    - web
-  routes:
-  - match: Host(`traefik.noiopen.it`) && PathPrefix(`/notls`)
-    kind: Rule
-    services:
-    - name: whoami
-      port: 80
-
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: ingressroutetls
-  namespace: default
+  name: traefik
 spec:
   entryPoints:
     - websecure
   routes:
-  - match: ((Host(`traefik.noiopen.it`) && PathPrefix(`/tls`)) || Host(`www.noiopen.it`)) || Host(`iosdk.noiopen.it`)
+ #- match: (Host(`traefik.noiopen.it`) && PathPrefix(`/tls`)) || Host(`www.noiopen.it`)
+  - match: Host(`traefik.noiopen.it`)
     kind: Rule
     services:
     - name: whoami
@@ -35,8 +19,7 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: ingressroutetls
-  namespace: openwhisk
+  name: api
 spec:
   entryPoints:
     - websecure
@@ -54,8 +37,7 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: ingressroutetls
-  namespace: default
+  name: iosdk
 spec:
   entryPoints:
     - websecure

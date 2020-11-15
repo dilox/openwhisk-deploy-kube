@@ -10,7 +10,7 @@ data:
       access_log /var/log/nginx/app.access_log main;
       error_log /var/log/nginx/app.error_log;
       location /api/ {
-          proxy_pass http://10.111.90.7/api/;
+          proxy_pass http://owdev-nginx.openwhisk/api/v1/web/guest/;
                 }
       location / {
           root /opt/io-sdk/admin/web/public/;

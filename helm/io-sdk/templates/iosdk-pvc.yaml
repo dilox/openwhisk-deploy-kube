@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: iosdk-pvc2
+  name: iosdk-pvc
 spec:
   accessModes:
   - ReadWriteOnce

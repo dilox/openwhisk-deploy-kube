@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: redis
+    component: cache
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: redis
+  template:
+    metadata:
+      labels:
+        name: redis
+        component: cache
+    spec:
+      containers:
+      - name: redis
+        image: redis
+        imagePullPolicy: Always
+        args: ["--requirepass", "$(__NIM_REDIS_PASSWORD)"]
+        ports:
+        - containerPort: 6379
+          name: redis
+        env:
+        - name: MASTER
+          value: "true"
+        - name: __NIM_REDIS_PASSWORD
+          value: "password"
