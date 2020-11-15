@@ -20,6 +20,11 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: api
+  annotations:
+    app.kubernetes.io/managed-by: Helm
+    meta.helm.sh/release-name: {{ .Release.Name }}
+    meta.helm.sh/release-namespace: {{ .Release.Namespace }}
+  namespace: {{ .Values.openwhisk.namespace }}
 spec:
   entryPoints:
     - websecure
@@ -46,7 +51,7 @@ spec:
     kind: Rule
     services:
     - name: iosdk-svc
-      namespace: default
+      namespace: {{ .Release.Namespace }}   
       port: 80
   tls:
     certResolver: default

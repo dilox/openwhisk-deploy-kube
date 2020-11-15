@@ -1,0 +1,12 @@
+Thank you for installing {{ .Chart.Name }}.
+
+Your release is named {{ .Release.Name }}.
+
+To learn more about the release, try:
+
+  $ helm status {{ .Release.Name }}
+  $ helm get all {{ .Release.Name }}
+
+On bare metal k8s add this DNAT rule to your edge ruoter:
+echo 8080 redirect to $(kubectl get svc --namespace {{ .Release.Namespace }} traefik -o jsonpath='{.spec.ports[1].nodePort}')
+echo 443 redirect to $(kubectl get svc --namespace {{ .Release.Namespace }} traefik -o jsonpath='{.spec.ports[2].nodePort}')
