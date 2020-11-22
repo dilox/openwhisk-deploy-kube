@@ -6,8 +6,7 @@ spec:
   entryPoints:
     - websecure
   routes:
- #- match: (Host(`traefik.noiopen.it`) && PathPrefix(`/tls`)) || Host(`www.noiopen.it`)
-  - match: Host(`traefik.noiopen.it`)
+  - match: Host(`{{ .Values.traefik.admin }}`)
     kind: Rule
     services:
     - name: whoami
@@ -29,7 +28,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-  - match: Host(`api.noiopen.it`)
+  - match: Host(`{{ .Values.traefik.api }}`)
     kind: Rule
     services:
     - name: owdev-nginx
@@ -47,7 +46,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-  - match: Host(`iosdk.noiopen.it`)
+  - match: Host(`{{ .Values.traefik.iosdk }}`)
     kind: Rule
     services:
     - name: iosdk-svc

@@ -3,16 +3,21 @@ kind: Service
 metadata:
   labels:
     component: cache
-    name: redis
+    name: iosdk-redis
     manager: kubectl
-  name: redis
+  name: iosdk-redis
+  namespace: {{ .Values.openwhisk.namespace }}
+  annotations:
+    app.kubernetes.io/managed-by: Helm
+    meta.helm.sh/release-name: {{ .Release.Name }}
+    meta.helm.sh/release-namespace: {{ .Release.Namespace }}
 spec:
   ports:
   - port: 6379
     protocol: TCP
     targetPort: 6379
   selector:
-    name: redis
+    name: iosdk-redis
   sessionAffinity: None
   type: ClusterIP
 status:

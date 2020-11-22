@@ -1,3 +1,7 @@
 openwhisk:
   namespace: openwhisk
+traefik:
+  admin: traefik.noiopen.it
+  api: api.noiopen.it
+  iosdk: iosdk.noiopen.it
 

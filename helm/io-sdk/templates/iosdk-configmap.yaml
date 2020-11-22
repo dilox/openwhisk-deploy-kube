@@ -6,7 +6,7 @@ data:
   virtualhost.conf: |
     server {
       listen 8080;
-      server_name iosdk.noiopen.it;
+      server_name {{ .Values.traefik.iosdk }};
       access_log /var/log/nginx/app.access_log main;
       error_log /var/log/nginx/app.error_log;
       location /api/ {

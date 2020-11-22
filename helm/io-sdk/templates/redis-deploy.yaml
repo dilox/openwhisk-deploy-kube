@@ -2,22 +2,27 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    name: redis
+    name: iosdk-redis
     component: cache
-  name: redis
+  name: iosdk-redis
+  namespace: {{ .Values.openwhisk.namespace }}
+  annotations:
+    app.kubernetes.io/managed-by: Helm
+    meta.helm.sh/release-name: {{ .Release.Name }}
+    meta.helm.sh/release-namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: redis
+      name: iosdk-redis
   template:
     metadata:
       labels:
-        name: redis
+        name: iosdk-redis
         component: cache
     spec:
       containers:
-      - name: redis
+      - name: iosdk-redis
         image: redis
         imagePullPolicy: Always
         args: ["--requirepass", "$(__NIM_REDIS_PASSWORD)"]
@@ -28,4 +33,4 @@ spec:
         - name: MASTER
           value: "true"
         - name: __NIM_REDIS_PASSWORD
-          value: "password"
+          value: "iosdk-password"
