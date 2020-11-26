@@ -28,4 +28,4 @@ keywords:
 maintainers:
   - name: Pierluigi Di Lorenzo
     email: pierluigi@sciabarra.com
-kubeVersion: ">=v1.16.0"
+#kubeVersion: ">=v1.16.0"

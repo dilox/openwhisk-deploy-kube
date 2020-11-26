@@ -9,12 +9,15 @@ spec:
     - protocol: TCP
       name: web
       port: 8000
+      nodePort: 31003
     - protocol: TCP
       name: admin
       port: 8080
+      nodePort: 31002
     - protocol: TCP
       name: websecure
       port: 4443
+      nodePort: 31004
   selector:
     app: traefik
 

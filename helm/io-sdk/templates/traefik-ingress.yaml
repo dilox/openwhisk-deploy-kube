@@ -1,41 +1,17 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: traefik
-spec:
-  entryPoints:
-    - websecure
-  routes:
-  - match: Host(`{{ .Values.traefik.admin }}`)
-    kind: Rule
-    services:
-    - name: whoami
-      port: 80
-  tls:
-    certResolver: default
-
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
   name: api
-  annotations:
-    app.kubernetes.io/managed-by: Helm
-    meta.helm.sh/release-name: {{ .Release.Name }}
-    meta.helm.sh/release-namespace: {{ .Release.Namespace }}
-  namespace: {{ .Values.openwhisk.namespace }}
 spec:
   entryPoints:
-    - websecure
+    - web
   routes:
-  - match: Host(`{{ .Values.traefik.api }}`)
+  - match: PathPrefix(`/api`)
     kind: Rule
     services:
-    - name: owdev-nginx
-      namespace: openwhisk
+    - name: openwhisk-nginx
+      namespace: default
       port: 80
-  tls:
-    certResolver: default
 
 ---
 apiVersion: traefik.containo.us/v1alpha1
@@ -44,13 +20,11 @@ metadata:
   name: iosdk
 spec:
   entryPoints:
-    - websecure
+    - web
   routes:
-  - match: Host(`{{ .Values.traefik.iosdk }}`)
+  - match: PathPrefix(`/app`)
     kind: Rule
     services:
     - name: iosdk-svc
       namespace: {{ .Release.Namespace }}   
       port: 80
-  tls:
-    certResolver: default
